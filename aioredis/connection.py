@@ -322,6 +322,7 @@ class RedisConnection:
 
     @asyncio.coroutine
     def wait_closed(self):
+        """Coroutine waiting until connection is closed."""
         yield from asyncio.shield(self._close_waiter, loop=self._loop)
 
     @property
@@ -429,7 +430,3 @@ class RedisConnection:
         """Authenticate to server."""
         fut = self.execute('AUTH', password)
         return wait_ok(fut)
-
-    @asyncio.coroutine
-    def get_atomic_connection(self):
-        return self
